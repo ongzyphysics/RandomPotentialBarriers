@@ -14,7 +14,7 @@ from scipy import sparse as sp
 from scipy.constants import Planck as hbar
 from scipy.constants import m_e, eV, pi
 
-# print(f"Planck constant (hbar) is {hbar}") 
+# print(f"Planck constant (hbar) is {hbar}")
 # print(f"Electron mass (m_e) is {m_e}")
 # print(f"Electron-volt (eV) is {eV}")
 nm = 1E-9 # definition of nanometer
@@ -22,21 +22,27 @@ nm = 1E-9 # definition of nanometer
 ## These are simulation parameters that can be tuned
 E_min = 0.00*eV # lower bound of energy spectrum
 E_max = 1.00*eV # upper bound of energy spectrum
-N_barriers = 20+1 # number of barriers, cannot be too large, limit to 200 max
-N_samples = 1 # numbe of samples for ensemble averaging
 ## These parameters control the half width of the barrier
 a_mean = 0.25*nm # average half width of barrier
 a_step = 0.00*nm # increment step size in half width of barrier
 delta_a = 0.00*nm # fluctuation amplitude in half width of barrier
 ## These parameters control the interbarrier distance
-s_mean = 7.50*nm # average interbarrier (edge-to-edge) distance
+s_mean = 4.50*nm # average interbarrier (edge-to-edge) distance
 s_step =  0.00*nm # increment step size of interbarrier distance
 delta_s = 0.00*nm # fluctuation amplitude in interbarrier distance
 ## These parameters control the barrier height
-v_mean =  1.00*eV # average barrier height
+v_mean =  -1.00*eV # average barrier height
 v_step =  0.00*eV # increment step size of barrier height
 delta_v = 0.00*eV # fluctuation amplitude in barrier height
 
+N_barriers = 20+1 # number of barriers, cannot be too large, limit to 200 max
+if (delta_a>1E-6*nm) & (delta_s>1E-6*nm)& (delta_v>1E-6*eV):
+    N_samples = 50 # numbe of samples for ensemble averaging
+    print('Ensemble averaging required')
+else:
+      N_samples = 1 # numbe of samples for ensemble averaging
+      print('Ensemble averaging not required')
+    
 t0 = time.perf_counter()
 def Ekdispersion(v_in,a_in,s_in)->None:
     # Compute and plot energy dispersion for infinite periodic array of identical barriers 
