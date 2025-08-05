@@ -36,7 +36,7 @@ v_step =  0.00*eV # increment step size of barrier height
 delta_v = 0.00*eV # fluctuation amplitude in barrier height
 
 N_barriers = 20+1 # number of barriers, cannot be too large, limit to 200 max
-if (delta_a>1E-6*nm) & (delta_s>1E-6*nm)& (delta_v>1E-6*eV):
+if (delta_a>1E-6*nm) | (delta_s>1E-6*nm) | (delta_v>1E-6*eV):
     N_samples = 50 # numbe of samples for ensemble averaging
     print('Ensemble averaging required')
 else:
